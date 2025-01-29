@@ -19,7 +19,7 @@ const Dashboard = ({ children }: { children?: React.ReactNode }) => {
       <CssBaseline />
 
       {/* AppBar */}
-      <AppBarComponent onDrawerToggle={handleDrawerToggle} />
+        <AppBarComponent onDrawerToggle={handleDrawerToggle} />
 
       {/* Drawer */}
       <DrawerComponent
@@ -35,7 +35,7 @@ const Dashboard = ({ children }: { children?: React.ReactNode }) => {
           flexGrow: 1,
           width: { lg: `calc(100% - 260px)` },
           px: 2,
-          pt: 4,
+          py: 4,
         }}
       >
         <Toolbar />

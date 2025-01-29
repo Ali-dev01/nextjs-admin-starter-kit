@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import axios from "axios";
+import jwt from "jsonwebtoken";
 import { createContext, useState, useEffect, ReactNode } from "react";
 
+import { mockUsers } from "@/constants";
+import { useRouter } from "next/navigation";
 interface LoginPayload {
   email: string;
   password: string;
@@ -14,45 +16,82 @@ type AuthContextType = {
   user: any;
   setUser: React.Dispatch<React.SetStateAction<any>>;
   loading: boolean;
+  initialLoading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  login: (payload: LoginPayload) => Promise<void>;
+  login: (payload: LoginPayload) => Promise<any>;
   logout: () => void;
 };
+
+const secret = process.env.NEXT_PUBLIC_JWT_SECRET!;
 
 // Create context
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider component
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider = ({ children }:{children:ReactNode}) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
+
+  const router = useRouter()
 
   useEffect(() => {
-    console.log('auth init')
-  }, [])
+    // Check for a valid token on load
+    const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, secret);
+        setUser(decoded);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        logout();
+      }
+    }
+    setInitialLoading(false)
+  }, []);
 
   const login = async (payload: LoginPayload) => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/auth/login", {
-        email: payload.email,
-        password: payload.password,
-      });
+      // Simulate a network delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const { user: userData, token } = response.data;
+      // Validate credentials
+      const foundUser = mockUsers.find(
+        (u) => u.email === payload.email && u.password === payload.password
+      );
 
-      // Save token in localStorage if "Remember Me" is checked
+      if (!foundUser) {
+        return "Invalid email or password";
+      }
+
+      // Generate a token
+      const token = jwt.sign(
+        { id: foundUser.id, email: foundUser.email, name: foundUser.name },
+        secret,
+        { expiresIn: "10m" }
+      );
+
+      // Save token in localStorage or sessionStorage
       if (payload.isRememberMe) {
         localStorage.setItem("authToken", token);
       } else {
         sessionStorage.setItem("authToken", token);
       }
 
-      // Set user data
-      setUser(userData);
-    } catch (error) {
-      console.error("Login failed:", error);
-    } finally {
+      const responseData = {
+        id: foundUser.id,
+        email: foundUser.email,
+        name: foundUser.name,
+      };
+
+      setUser(responseData);
+      return responseData
+    } 
+    catch (error: any) {
+      console.error("Login failed:", error?.message);
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -61,23 +100,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Clear storage
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
-
-    // Reset user state
+    
     setUser(null);
+    router.replace('/sign-in')
   };
 
   const authValues = {
-    user : true,
+    user,
     setUser,
     loading,
+    initialLoading,
     setLoading,
     login,
-    logout
-  }
+    logout,
+  };
 
-  return (
-    <AuthContext.Provider value={authValues}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authValues}>{children}</AuthContext.Provider>;
 };

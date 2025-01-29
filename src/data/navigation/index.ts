@@ -6,6 +6,11 @@ const navigation = () => {
       icon: "mage:dashboard-2",
     },
     {
+      title: "UI Components",
+      path: "/ui-components",
+      icon: "fluent:payment-28-regular",
+    },
+    {
       title: "User Profile",
       path: "/profile",
       icon: "iconamoon:profile-light",
@@ -17,7 +22,6 @@ const navigation = () => {
     },
     {
       title: "Recipients",
-      path: "/recipients",
       icon: "mage:users",
       children: [
         {

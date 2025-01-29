@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import Link from "next/link";
 import { Box, Collapse, Typography } from "@mui/material";
 import { Icon } from "@iconify/react";
-import { useRouter } from "next/navigation";
 
 interface MenuItemProps {
   item: any;
@@ -14,7 +14,6 @@ interface MenuItemProps {
 
 const MenuItem = (props: MenuItemProps) => {
   const { item, isChild, openMenu, activeLink, handleMenuClick } = props;
-  const router = useRouter();
 
   // Apply styles conditionally based on whether the link is active
   const itemStyle = isChild
@@ -28,17 +27,14 @@ const MenuItem = (props: MenuItemProps) => {
       };
 
   return (
-    <React.Fragment>
-      <Box
-        sx={itemStyle}
-        onClick={() => (item.children ? handleMenuClick(item.title) : router.push(item.path))}
-      >
-        <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-          <Icon icon={item.icon} fontSize={isChild ? 12 : 20} />
-          <Typography variant="body1">{item.title}</Typography>
-        </Box>
+    <>
+      {item.children ? (
+        <Box sx={itemStyle} onClick={() => handleMenuClick(item.title)}>
+          <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <Icon icon={item.icon} fontSize={isChild ? 12 : 20} />
+            <Typography variant="body1">{item.title}</Typography>
+          </Box>
 
-        {item.children && (
           <Icon
             fontSize={22}
             icon="iconamoon:arrow-right-2-light"
@@ -47,8 +43,17 @@ const MenuItem = (props: MenuItemProps) => {
               transition: "transform 0.3s ease",
             }}
           />
-        )}
-      </Box>
+        </Box>
+      ) : (
+        <Link href={item.path}>
+          <Box sx={itemStyle}>
+            <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <Icon icon={item.icon} fontSize={isChild ? 12 : 20} />
+              <Typography variant="body1">{item.title}</Typography>
+            </Box>
+          </Box>
+        </Link>
+      )}
 
       {item.children && (
         <Collapse in={openMenu === item.title} timeout="auto" unmountOnExit>
@@ -66,7 +71,7 @@ const MenuItem = (props: MenuItemProps) => {
           </Box>
         </Collapse>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

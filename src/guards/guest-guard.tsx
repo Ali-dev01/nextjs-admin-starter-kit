@@ -1,26 +1,29 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { ReactNode, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
 interface GuestGuardProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export function GuestGuard({ children }: GuestGuardProps) {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, initialLoading } = useAuth();
+  const searchParams = useSearchParams();
+
+  const returnUrl = searchParams.get("returnTo");
 
   useEffect(() => {
     if (user) {
-      router.replace("/dashboard");
+      router.replace(returnUrl || "/dashboard");
     }
   }, [user, router]);
 
-  if (user) {
-    return null;
+  if (user || initialLoading) {
+    return <div>Loading...</div>;
   }
 
-  return <>{children}</>;
+  return <>{!user && children}</>;
 }

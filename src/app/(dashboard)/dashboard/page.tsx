@@ -1,9 +1,14 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 const Dashboard = () => {
   return (
-    <h4>Dashboard</h4>
-  )
-}
+    <>
+      <h4>Dashboard</h4>
+      <Link href="/profile">Profile</Link>
+      <br />
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
-
-import navigation from "@/data/navigation";
-import MenuItem from "./MenuItem";
 import { usePathname } from "next/navigation";
+import { Box, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
+import MenuItem from "./MenuItem";
+import navigation from "@/data/navigation";
+import { findParentTitle } from "../utils";
 
 const Sidebar: React.FC = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -19,7 +20,11 @@ const Sidebar: React.FC = () => {
   };
 
   useEffect(() => {
+    const parentTitle = findParentTitle(navigationData, pathname);
+    
     setActiveLink(pathname);
+    setOpenMenu(parentTitle)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -36,7 +41,7 @@ const Sidebar: React.FC = () => {
         }}
       >
         <Typography variant="h6" noWrap>
-          Vuexy
+          Admin
         </Typography>
       </Box>
 
