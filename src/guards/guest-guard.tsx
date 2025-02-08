@@ -17,9 +17,10 @@ export function GuestGuard({ children }: GuestGuardProps) {
 
   useEffect(() => {
     if (user) {
+      console.log('this run')
       router.replace(returnUrl || "/dashboard");
     }
-  }, [user, router]);
+  }, [user, router, returnUrl]);
 
   if (user || initialLoading) {
     return <div>Loading...</div>;

@@ -7,10 +7,14 @@ import React, { useEffect, useState } from "react";
 import MenuItem from "./MenuItem";
 import navigation from "@/data/navigation";
 import { findParentTitle } from "../utils";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { useSettings } from "@/contexts/SettingsContext";
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeLink, setActiveLink] = useState<string | null>(null);
+
+  const { layoutCollapsed, toggleLayout } = useSettings();
 
   const pathname = usePathname();
   const navigationData = navigation();
@@ -21,10 +25,10 @@ const Sidebar: React.FC = () => {
 
   useEffect(() => {
     const parentTitle = findParentTitle(navigationData, pathname);
-    
+
     setActiveLink(pathname);
-    setOpenMenu(parentTitle)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setOpenMenu(parentTitle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
@@ -33,6 +37,9 @@ const Sidebar: React.FC = () => {
       <Box
         sx={{
           position: "sticky",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           top: 0,
           zIndex: 1,
           backgroundColor: "#fff",
@@ -43,6 +50,16 @@ const Sidebar: React.FC = () => {
         <Typography variant="h6" noWrap>
           Admin
         </Typography>
+        <Box
+          sx={{ cursor: "pointer" }}
+          onClick={toggleLayout}
+        >
+          <Icon
+            icon={layoutCollapsed ? "la:circle" : "la:dot-circle"}
+            fontSize={22}
+            color="#333333"
+          />
+        </Box>
       </Box>
 
       <Box

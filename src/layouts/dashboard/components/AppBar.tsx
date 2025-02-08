@@ -4,6 +4,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { AppBar, Toolbar, IconButton, Typography, Box, Button } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
+import { useSettings } from "@/contexts/SettingsContext";
 
 interface AppBarProps {
   onDrawerToggle: () => void;
@@ -11,6 +12,9 @@ interface AppBarProps {
 
 const AppBarComponent: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
   const { logout } = useAuth();
+  const { layoutCollapsed } = useSettings();
+
+    const sidebarWidth = layoutCollapsed ? 75 : 260;
 
   const handleLogout = () => {
     setTimeout(() => {
@@ -22,7 +26,8 @@ const AppBarComponent: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
     <AppBar
       position="fixed"
       sx={{
-        width: { lg: `calc(100% - 260px)` },
+        width: { lg: `calc(100% - ${sidebarWidth}px)` },
+        transition: "margin-left 0.3s ease-in-out, width 0.3s ease-in-out",
         ml: { lg: "260px" },
         backgroundColor: "rgba(248, 247, 250, 0.7)", // Semi-transparent background
         backdropFilter: "blur(8px)",
@@ -37,6 +42,7 @@ const AppBarComponent: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           mx: 2,
           mt: 2,
           borderRadius: "8px",
+          minHeight: '58px !important',
           boxShadow: "rgba(0, 0, 0, 0.09) 0px 3px 12px",
         }}
       >
@@ -60,7 +66,7 @@ const AppBarComponent: React.FC<AppBarProps> = ({ onDrawerToggle }) => {
           <IconButton>
             <Icon icon="mdi:account-outline" fontSize={24} />
           </IconButton>
-          <Button variant="outlined" onClick={handleLogout}>
+          <Button variant="outlined" size="small" onClick={handleLogout}>
             Logout
           </Button>
         </Box>

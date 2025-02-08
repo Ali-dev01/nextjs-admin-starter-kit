@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { ReactNode, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 
 interface AuthGuardProps {
@@ -10,22 +11,25 @@ interface AuthGuardProps {
 
 export function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
+  const path = usePathname();
   const { user, initialLoading } = useAuth();
+
+  // const token =
+  //   localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 
   useEffect(() => {
     if (!user && !initialLoading) {
-      const currentPath = window.location.pathname;
-
-      // If already on /sign-in, do not append returnTo
-      if (currentPath !== "/sign-in") {
+      
+      // If already on /sign-in, do not append returnUr
+      if (path !== "/sign-in") {
         const searchParams = new URLSearchParams();
-        searchParams.set("returnTo", currentPath + window.location.search);
+        searchParams.set("returnTo", path + window.location.search);
         router.replace(`/sign-in?${searchParams.toString()}`);
       } else {
         router.replace("/sign-in");
       }
     }
-  }, [user, router, initialLoading]);
+  }, [router, initialLoading]);
 
   if (!user || initialLoading) {
     return <div>Loading...</div>;
