@@ -12,7 +12,7 @@ A powerful and scalable Next.js Admin Template built with best practices in mind
 
 🌱 Ready-to-scale project structure
 
-
+###########################
 
 🚀 Tech Stack
 
@@ -32,7 +32,7 @@ Authentication with protected routes
 
 Environment-based configurations
 
-
+###########################
 
 🔐 Features
 
@@ -44,6 +44,7 @@ Layout switching support (dashboard vs auth views)
 
 Optimized and minimal boilerplate to help you get started faster
 
+###########################
 
 📦 Getting Started
 
