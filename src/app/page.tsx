@@ -1,11 +1,24 @@
-import React from "react";
+"use client";
 
-const Home = () => {
-  return (
-    <>
-      <h1>Home</h1>
-    </>
-  );
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+
+const HomePage = () => {
+  const router = useRouter();
+  const { user, initialLoading } = useAuth();
+
+  useEffect(() => {
+    if (!initialLoading) {
+      if (user) {
+        router.replace("/dashboard");
+      } else {
+        router.replace("/sign-in");
+      }
+    }
+  }, [user, initialLoading]);
+
+  return <div>Loading...</div>;
 };
 
-export default Home;
+export default HomePage;

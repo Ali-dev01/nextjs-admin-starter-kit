@@ -14,9 +14,6 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const path = usePathname();
   const { user, initialLoading } = useAuth();
 
-  // const token =
-  //   localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
-
   useEffect(() => {
     if (!user && !initialLoading) {
       
