@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+⚡ Next.js Admin Starter Kit
+A powerful and scalable Next.js Admin Template built with best practices in mind. It includes:
 
-## Getting Started
+✅ Authentication system (login/logout)
+🔐 Protected & private routes
+📐 Dashboard layout with sidebar navigation
+🧩 Component-based architecture
+🌱 Ready-to-scale project structure
 
-First, run the development server:
+🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Next.js 14+
+React 18+
+TypeScript
+Material UI (MUI)
+React Hook Form
+Authentication with protected routes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔐 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Full authentication flow (with route protection)
+Private routes for dashboard sections
+Layout switching support (dashboard vs auth views)
+Optimized and minimal boilerplate to help you get started faster
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+📦 Getting Started
 
-## Learn More
+1. Clone the repository
+    git clone https://github.com/your-username/nextjs-admin-starter-kit.git
+    cd nextjs-admin-starter-kit
 
-To learn more about Next.js, take a look at the following resources:
+2. Install dependencies
+    npm install
+    # or
+    yarn install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Setup environment variables
+    Copy the .env.example file and rename it to .env
+    Now, open .env and configure the environment variables based on your setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Run the development server
+    npm run dev
+    # or
+    yarn dev
+    Visit http://localhost:3000 — your admin panel is live!
+   
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
