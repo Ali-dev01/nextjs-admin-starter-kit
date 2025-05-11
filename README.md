@@ -26,22 +26,25 @@ Optimized and minimal boilerplate to help you get started faster
 📦 Getting Started
 
 1. Clone the repository
-    git clone https://github.com/your-username/nextjs-admin-starter-kit.git
+    git clone https://github.com/Ali-dev01/nextjs-admin-starter-kit.git
     cd nextjs-admin-starter-kit
 
 2. Install dependencies
+   
     npm install
     # or
     yarn install
 
-3. Setup environment variables
+4. Setup environment variables
     Copy the .env.example file and rename it to .env
     Now, open .env and configure the environment variables based on your setup
 
-4. Run the development server
+5. Run the development server
+
     npm run dev
     # or
     yarn dev
+   
     Visit http://localhost:3000 — your admin panel is live!
    
 
